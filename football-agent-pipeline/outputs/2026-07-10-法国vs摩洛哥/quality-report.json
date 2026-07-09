@@ -1,0 +1,71 @@
+{
+  "match": "法国 vs 摩洛哥 — 2026世界杯1/4决赛",
+  "date": "2026-07-09",
+  "venue": "吉列体育场，福克斯堡",
+  "report_file": "03-final-report.md",
+  "quality_score": 91.3,
+  "pass_threshold": 88,
+  "verdict": "✅ 可交付（降分后仍达标）",
+  "deduction_log": [
+    "D4: 用户人工审查发现2处模板套话（'PSG前队友对决'+'PSG前队友效应'），自评5.0→修正为3.5",
+    "本次审计暴露：D4缺乏机器grep校验，依赖Agent自评。已将模板套话正则加入scripts/"
+  ],
+  "machine_checks": {
+    "D8_charcount": {
+      "value": 87388,
+      "threshold": 15000,
+      "pass": true,
+      "source": "wc -m"
+    },
+    "D10_latin_names": {
+      "value": 0,
+      "threshold": 3,
+      "pass": true,
+      "detail": "拉丁字符0命中（白名单除外），R5合规",
+      "source": "grep 拉丁字符"
+    },
+    "D9_source_tags": {
+      "value": 12,
+      "threshold": 5,
+      "pass": true,
+      "tags": ["FBref", "TM", "WhoScored", "WS", "SS", "SofaScore", "FIFA", "UEFA", "Polymarket", "WorldReferee", "11v11", "Flashscore"]
+    },
+    "D4_template_cliches": {
+      "value": 2,
+      "detail": "L100:'PSG前队友对决' / L320:'PSG前队友效应'——虽作分析框架使用，但属媒体常见叙事模板",
+      "source": "grep 模板套话正则（新增检测项）"
+    },
+    "D1_estimates": {
+      "value": 0,
+      "note": "正文中无'待补充'残留，SS估算均标注为[SS估算]透明标签"
+    }
+  },
+  "scoring_detail": {
+    "D1_数据溯源率": {"weight": 0.19, "score": 4.0, "weighted": 0.76, "note": "101处估算标记但均为[SS估算]透明标注"},
+    "D2_博弈点指向性": {"weight": 0.17, "score": 5.0, "weighted": 0.85, "note": "7步思维链+三维交互+双教练推演+条件状态树"},
+    "D3_反指标完整性": {"weight": 0.14, "score": 5.0, "weighted": 0.70, "note": "3条逆向因果链+10条失败信号+4级分类"},
+    "D4_模板零套用": {"weight": 0.13, "score": 3.5, "weighted": 0.455, "note": "⚠️ 用户审查发现2处模板：'PSG前队友对决'(L100)、'PSG前队友效应'(L320)。Agent自评5.0偏乐观，修正为3.5"},
+    "D5_宏观变量覆盖": {"weight": 0.12, "score": 5.0, "weighted": 0.60, "note": "5项全含具体数字，裁判Playwright直访确认"},
+    "D6_市场验证闭环": {"weight": 0.10, "score": 4.5, "weighted": 0.45, "note": "DraftKings+Polymarket+bet365三源，Oddspedia降级替代路径"},
+    "D7_速查卡完成度": {"weight": 0.10, "score": 5.0, "weighted": 0.50, "note": "53人全覆盖，仅中文译名，无原文名列（R5合规）"},
+    "D9_数据源多样性": {"weight": 0.05, "score": 5.0, "weighted": 0.25, "note": "12种源标签，机器验证通过"}
+  },
+  "gates": {
+    "gate_1": {"D1": 4, "D5": 5, "D9": 4, "pass": true, "note": "阶段1出口"},
+    "gate_2_prescreen": {"D2": 5, "D3": 5, "pass": true, "note": "阶段2a后预评"},
+    "gate_3_final": {"D8": true, "D10": true, "total_score": 91.3, "pass": true, "note": "用户审查后修正D4"}
+  },
+  "lessons_learned": {
+    "D4_blind_spot": "模板套话检测依赖Agent自评，缺乏机器grep。本次'前队友对决'为Agent自评漏网，用户人工审查捕获。",
+    "fix": "scripts/check-d4-cliches.sh：grep 扫描20+常见模板套话模式（前队友/老对手/恩怨/宿命/巅峰对决/黑马/救赎...）",
+    "principle": "任何Agent自评维度，最终都应有对应机器grep校验。R3规则需扩展：不仅D8/D9/D10用机器，D4也应纳入。"
+  },
+  "pipeline_stats": {
+    "total_stages": 17,
+    "total_agent_calls": 14,
+    "total_output_files": 18,
+    "total_characters_all_stages": 360350,
+    "final_report_characters": 87388,
+    "execution_date": "2026-07-07"
+  }
+}

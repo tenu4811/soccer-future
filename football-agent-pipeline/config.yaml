@@ -1,0 +1,27 @@
+# 比赛配置
+# 每次新建分析前，修改这个文件
+
+match:
+  home_team: "西班牙"         # 主队中文名
+  away_team: "比利时"       # 客队中文名
+  home_team_en: "Spain"    # 主队英文名
+  away_team_en: "Belgium"   # 客队英文名
+  competition: "世界杯"     # 赛事名称
+  stage: "八强"         # 阶段（小组赛/十六强/1/4决赛/半决赛/决赛）
+  date: "2026-07-11"       # 比赛日期
+  kickoff: "待确认"     # 开球时间（FBref确认）
+  venue: "待确认"  # 场地（FBref确认）
+
+# 数据源 ID（用于浏览器直访）
+fbref:
+  home_team_id: "b561dd30"  # 西班牙 FBref ID
+  away_team_id: "361422b9"  # 比利时 FBref ID
+
+transfermarkt:
+  home_team_id: "3375"      # 西班牙 TM ID
+  away_team_id: "3382"      # 比利时 TM ID
+
+# 输出控制
+output:
+  dir: "outputs/"           # 输出目录
+  format: "markdown"        # 报告格式
